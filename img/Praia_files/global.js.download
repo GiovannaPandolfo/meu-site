@@ -1,0 +1,123 @@
+/**
+ * VT Blogging Pro Sripts
+ *
+ */
+(function($){ //create closure so we can safely use $ as alias for jQuery
+
+    $(document).ready(function(){
+
+        "use strict";
+		
+		// Header Search
+		$('.search-icon > .genericon-search').click(function(){
+			$('.header-search').css('display', 'block');
+			$('.search-icon > .genericon-search').toggleClass('active');
+			$('.search-icon > .genericon-close').toggleClass('active'); 
+			$('.header-search input.search-input').focus();
+		});
+
+		$('.search-icon > .genericon-close').click(function(){
+			$('.header-search').css('display', 'none');
+			$('.search-icon > .genericon-search').toggleClass('active');
+			$('.search-icon > .genericon-close').toggleClass('active');
+			$('.header-search input.search-input').focus();
+		}); 
+		
+		// Slider
+        if ( $('.slider').length ) {
+				
+			  $(".slider").owlCarousel({
+				navigation: true,
+				slideSpeed: 300,
+				autoPlay: true,
+				//paginationSpeed : 400,
+				singleItem: true,
+				pagination: false,
+				navigationText: ['<span class="fa fa-angle-left"></span>', '<span class="fa fa-angle-right"></span>'],
+				autoHeight: true
+			  });
+        }
+		
+		// Superfish 
+        // initialise plugin
+        var example = $('.sf-menu').superfish({
+            //add options here if required
+            delay:       100,
+            speed:       'fast',
+            autoArrows:  false  
+        });
+
+
+		// Slick Mobile Menu
+        $('#primary-menu').slicknav({
+            prependTo: '#slick-mobile-menu',
+            allowParentLinks: true,
+            label:'Menu'
+        });
+
+		// Smooth Scrolling To Internal Links
+		$(document).ready(function(){
+			$('a[href^="#comments"]').on('click',function (e) {
+				e.preventDefault();
+
+				var target = this.hash;
+				var $target = $(target);
+
+				$('html, body').stop().animate({
+					'scrollTop': $target.offset().top
+				}, 900, 'swing', function () {
+					window.location.hash = target;
+				});
+			});
+		});
+		
+		// Widget Tabs
+		$('.widget-tab-nav a').click(function (e) {
+			e.preventDefault();
+			$(this).tab('show');
+		})
+
+        // hide #back-top first
+        $("#back-top").hide();
+
+        $(function () {
+            // fade in #back-top
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 300) {
+                    $('#back-top').fadeIn('200');
+                } else {
+                    $('#back-top').fadeOut('200');
+                }
+            });
+
+            // scroll body to 0px on click
+            $('#back-top a').click(function () {
+                $('body,html').animate({
+                    scrollTop: 0
+                }, 1200);
+                return false;
+            });
+        });
+		
+		
+		// Sticky sidebar
+		$('.content-area').hcSticky({
+		  stickTo: 'aside',
+		  top:30,
+		  bottom:30,
+		  bottomEnd:30,
+		  //innerTop:30,
+		  responsive: {
+			980: {
+			  disable: true
+			}
+		  }
+		});
+	
+
+		// WOW
+		new WOW().init();
+
+    });
+
+})(jQuery);
